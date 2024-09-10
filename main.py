@@ -14,6 +14,7 @@ settings_button = ""
 # Complete Settings
 # Choose want you want to click
 # Menu
+# Make EXE file for startup
 
 pyautogui.PAUSE = 0.1
 
