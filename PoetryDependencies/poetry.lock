@@ -15,6 +15,16 @@ files = [
 pyobjc = {version = "*", markers = "sys_platform == \"darwin\""}
 
 [[package]]
+name = "mouse"
+version = "0.7.1"
+description = "Hook and simulate mouse events on Windows and Linux"
+optional = false
+python-versions = "*"
+files = [
+    {file = "mouse-0.7.1-py2.py3-none-any.whl", hash = "sha256:d34bb9548890089fcb11988400e26f55c624e6c7b741fff75fedfdfbd37c0016"},
+]
+
+[[package]]
 name = "mouseinfo"
 version = "0.1.3"
 description = "An application to display XY position and RGB color information for the pixel currently under the mouse. Works on Python 2 and 3."
@@ -2990,4 +3000,4 @@ docs = ["furo (==2024.4.27)", "pyenchant (==3.2.2)", "sphinx (==7.1.2)", "sphinx
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "e68d0fdbf175e212767623faf89727c745d9ed150b33a26e1ac47342f792c1d5"
+content-hash = "08ccafff648af9f0bdb19244a8f437c6bdb86bbb5e1e0a7562be4d78f6d5df1b"
