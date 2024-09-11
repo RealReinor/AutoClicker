@@ -27,11 +27,6 @@ def auto_click():
         # keyboard.send("w")
 
 
-import json
-import keyboard
-import mouse
-
-
 def read_key_event():
     while True:
         event = keyboard.read_event(suppress=True)
