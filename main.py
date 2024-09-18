@@ -30,7 +30,7 @@ class AutoClickerApp:
         title.pack(padx=10, pady=10)
 
         # Start Button
-        start_button = ctk.CTkButton(self.root, text="Start", command=self.start_button_on_click)
+        start_button = ctk.CTkButton(self.root, text=f"Start ({self.clicking_manager.start_button.upper()})", command=self.start_button_on_click)
         start_button.pack(pady=10)
 
         # Stop Button
@@ -47,6 +47,7 @@ class AutoClickerApp:
     def stop_button_on_click(self):
         if self.clicking_manager.auto_clicking:
             self.clicking_manager.stop_auto_click()
+
 
     def on_close(self):
         self.clicking_manager.stop_auto_click()

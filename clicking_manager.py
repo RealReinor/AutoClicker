@@ -16,11 +16,12 @@ class ClickingManager:
         self.click_thread = None
         self.listener_thread = None
         self.active = True
-        pyautogui.PAUSE = 0.1
+        self.event = threading.Event()
+        pyautogui.PAUSE = 0.01
 
     def auto_click(self):
         while self.auto_clicking:
-            print("clicking")
+            pyautogui.click()
 
     def start_auto_click(self):
         if not self.auto_clicking:
@@ -44,12 +45,14 @@ class ClickingManager:
     def read_key_event(self):
         def key_listener():
             keyboard.hook(self.on_key_event)
+            self.event.wait()
 
-        self.listener_thread = threading.Thread(target=key_listener)
-        self.listener_thread.start()
+        if self.listener_thread is None or not self.listener_thread.is_alive():
+            self.listener_thread = threading.Thread(target=key_listener)
+            self.listener_thread.start()
 
     def stop_key_listener(self):
-        self.active = False
+        self.event.set()
         keyboard.unhook_all()
         if self.listener_thread is not None:
             self.listener_thread.join()
