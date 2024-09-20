@@ -2,6 +2,7 @@ import pyautogui
 import keyboard
 import json
 import threading
+from settings_manager import SettingsManager
 
 
 class ClickingManager:
@@ -17,11 +18,15 @@ class ClickingManager:
         self.listener_thread = None
         self.active = True
         self.event = threading.Event()
+
+        # Instance of Class
+        self.settings_manager = SettingsManager()
+
         pyautogui.PAUSE = 0.01
 
     def auto_click(self):
         while self.auto_clicking:
-            pyautogui.click()
+            print("cliciking")
 
     def start_auto_click(self):
         if not self.auto_clicking:
@@ -36,7 +41,7 @@ class ClickingManager:
                 self.click_thread.join()
 
     def on_key_event(self, event):
-        if event.event_type == "up" and event.name == self.start_button:
+        if event.event_type == "up" and event.name == self.settings_manager.start_button:
             if self.auto_clicking:
                 self.stop_auto_click()
             else:
