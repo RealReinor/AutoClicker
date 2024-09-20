@@ -21,3 +21,4 @@ Make sure to install these dependencies by running:
 
 ```bash
 poetry install
+```
