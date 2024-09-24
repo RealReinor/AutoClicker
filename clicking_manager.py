@@ -41,7 +41,7 @@ class ClickingManager:
                 self.click_thread.join()
 
     def on_key_event(self, event):
-        if event.event_type == "up" and event.name == self.settings_manager.start_button:
+        if event.event_type == "up" and event.name == self.start_button:
             if self.auto_clicking:
                 self.stop_auto_click()
             else:
@@ -61,3 +61,9 @@ class ClickingManager:
         keyboard.unhook_all()
         if self.listener_thread is not None:
             self.listener_thread.join()
+
+    def reset_start_button(self):
+        with open("settings.json") as f:
+            settings_json = json.load(f)
+            start_button = settings_json["start_button"]
+            self.start_button = start_button

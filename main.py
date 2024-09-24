@@ -65,7 +65,9 @@ class AutoClickerApp:
     def on_record(self):
         if not self.clicking_manager.auto_clicking:
             self.settings_manager.record_new_start_button_key()
+            self.clicking_manager.reset_start_button()
             self.start_button.configure(text=f"Start ({self.settings_manager.start_button.upper()})")
+
 
 
 if __name__ == '__main__':
