@@ -2,6 +2,7 @@ import pyautogui
 import keyboard
 import json
 import threading
+from settings_manager import SettingsManager
 
 
 class ClickingManager:
@@ -16,11 +17,16 @@ class ClickingManager:
         self.click_thread = None
         self.listener_thread = None
         self.active = True
-        pyautogui.PAUSE = 0.1
+        self.event = threading.Event()
+
+        # Instance of Class
+        self.settings_manager = SettingsManager()
+
+        pyautogui.PAUSE = 0.01
 
     def auto_click(self):
         while self.auto_clicking:
-            print("clicking")
+            print("cliciking")
 
     def start_auto_click(self):
         if not self.auto_clicking:
@@ -44,12 +50,20 @@ class ClickingManager:
     def read_key_event(self):
         def key_listener():
             keyboard.hook(self.on_key_event)
+            self.event.wait()
 
-        self.listener_thread = threading.Thread(target=key_listener)
-        self.listener_thread.start()
+        if self.listener_thread is None or not self.listener_thread.is_alive():
+            self.listener_thread = threading.Thread(target=key_listener)
+            self.listener_thread.start()
 
     def stop_key_listener(self):
-        self.active = False
+        self.event.set()
         keyboard.unhook_all()
         if self.listener_thread is not None:
             self.listener_thread.join()
+
+    def reset_start_button(self):
+        with open("settings.json") as f:
+            settings_json = json.load(f)
+            start_button = settings_json["start_button"]
+            self.start_button = start_button
