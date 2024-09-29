@@ -21,5 +21,13 @@ class SettingsManager:
                     f.seek(0)
                     json.dump(settings_json,f, indent=4)
                     f.truncate()
-                    self.start_button = settings_json['start_button']
+                    self.start_button = new_key.name
                 break
+    def change_clicking_button(self,choice):
+        with open("settings.json", "r+") as f:
+            settings_json = json.load(f)
+            settings_json["clicking_button"] = choice
+            f.seek(0)
+            json.dump(settings_json, f, indent=4)
+            f.truncate()
+            self.clicking_button = choice

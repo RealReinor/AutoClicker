@@ -1,3 +1,5 @@
+from idlelib.configdialog import tracers
+
 import customtkinter as ctk
 from clicking_manager import ClickingManager
 from settings_manager import SettingsManager
@@ -15,6 +17,7 @@ class AutoClickerApp:
         self.start_button = None
         self.stop_button = None
         self.record_button = None
+        self.clicking_option_button = None
 
         # Configure appearance
         ctk.set_appearance_mode("dark")
@@ -28,13 +31,16 @@ class AutoClickerApp:
         # UI elements
         self.create_widgets()
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
+
     def create_widgets(self):
         # Title
-        title = ctk.CTkLabel(self.root, text='Welcome To AutoClicker By "Reinor"', text_color="white", font=("Helvetica", 14, "bold"))
+        title = ctk.CTkLabel(self.root, text='Welcome To AutoClicker By "Reinor"', text_color="white",
+                             font=("Helvetica", 14, "bold"))
         title.pack(padx=10, pady=10)
 
         # Start Button
-        self.start_button = ctk.CTkButton(self.root, text=f"Start ({self.settings_manager.start_button.upper()})", command=self.start_button_on_click)
+        self.start_button = ctk.CTkButton(self.root, text=f"Start ({self.settings_manager.start_button.upper()})",
+                                          command=self.start_button_on_click)
         self.start_button.pack(pady=10)
 
         # Stop Button
@@ -43,7 +49,13 @@ class AutoClickerApp:
 
         # Record Button
         self.record_button = ctk.CTkButton(self.root, text='Record', command=self.on_record)
-        self.record_button.pack(pady=50)
+        self.record_button.pack(pady = 10)
+
+        # DropDown Menu
+        self.clicking_option_button = ctk.CTkComboBox(self.root, values=["LeftButton", "RightButton"],
+                                                      command=self.on_dropdown)
+        self.clicking_option_button.pack(padx = 10)
+        self.clicking_option_button.set("LeftButton")
 
         # Start Reading Keys
         self.clicking_manager.read_key_event()
@@ -56,7 +68,6 @@ class AutoClickerApp:
         if self.clicking_manager.auto_clicking:
             self.clicking_manager.stop_auto_click()
 
-
     def on_close(self):
         self.clicking_manager.stop_auto_click()
         self.clicking_manager.stop_key_listener()
@@ -67,6 +78,13 @@ class AutoClickerApp:
             self.settings_manager.record_new_start_button_key()
             self.clicking_manager.reset_start_button()
             self.start_button.configure(text=f"Start ({self.settings_manager.start_button.upper()})")
+
+    def on_dropdown(self,choice):
+        if not self.clicking_manager.auto_clicking:
+            if choice != self.settings_manager.clicking_button:
+                self.settings_manager.change_clicking_button(choice)
+                self.clicking_manager.reset_clicking_button()
+
 
 
 

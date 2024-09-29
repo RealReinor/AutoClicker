@@ -1,7 +1,13 @@
+import time
+from os import times
+
 import pyautogui
 import keyboard
 import json
 import threading
+
+from mouse import right_click
+
 from settings_manager import SettingsManager
 
 
@@ -25,8 +31,13 @@ class ClickingManager:
         pyautogui.PAUSE = 0.01
 
     def auto_click(self):
-        while self.auto_clicking:
-            print("cliciking")
+        if self.clicking_button == "LeftButton":
+            while self.auto_clicking:
+                pyautogui.click()
+        elif self.clicking_button == "RightButton":
+            while self.auto_clicking:
+                pyautogui.click(button="secondary")
+
 
     def start_auto_click(self):
         if not self.auto_clicking:
@@ -67,3 +78,9 @@ class ClickingManager:
             settings_json = json.load(f)
             start_button = settings_json["start_button"]
             self.start_button = start_button
+    def reset_clicking_button(self):
+        with open("settings.json") as f:
+            settings_json = json.load(f)
+            clicking_button = settings_json["clicking_button"]
+            self.clicking_button = clicking_button
+

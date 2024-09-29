@@ -2,5 +2,5 @@
     "start_button": "f5",
     "quit_button": "f1",
     "settings_button": "s",
-    "clicking_button": "l_button"
+    "clicking_button": "LeftButton"
 }
